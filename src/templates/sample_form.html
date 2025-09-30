@@ -1,0 +1,76 @@
+{# sample_form.html #}
+{% extends "layout.html" %}
+{% block content %}
+<section id="fragment" class="page form" hx-history="false">
+  <div class="bg-white rounded shadow">
+    <div class="p-4 border-b">
+      <h2 class="font-semibold">
+        {% match s %}{% when Some(_) %}Edit{% when None %}New{% endmatch %} Sample
+      </h2>
+    </div>
+
+    <form method="post" action="{{ action }}" hx-post="{{ action }}" hx-target="#shell" hx-select="#shell"
+      hx-swap="outerHTML swap:200ms" class="p-4">
+      {% match s %}
+      {% when Some(sample) %}
+      <div class="grid grid-cols-2 gap-6 mb-6">
+        <!-- name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-slate-700 mb-1">Name</label>
+          <input type="text" id="name" name="name" value="{{ sample.name }}"
+            class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-600 focus:ring-slate-600 h-10" />
+        </div>
+
+        <!-- status -->
+        <div>
+          <label for="status" class="block text-sm font-medium text-slate-700 mb-1">Status</label>
+          <select id="status" name="status"
+            class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-600 focus:ring-slate-600 h-10">
+            <option value="draft" {% if sample.status=="draft" %}selected{% endif %}>Draft</option>
+            <option value="active" {% if sample.status=="active" %}selected{% endif %}>Active</option>
+            <option value="archived" {% if sample.status=="archived" %}selected{% endif %}>Archived</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- description -->
+      <div class="mb-6">
+        <label for="description" class="block text-sm font-medium text-slate-700 mb-1">Description</label>
+        <textarea id="description" name="description" rows="4"
+          class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-600 focus:ring-slate-600">{% match sample.description %}{% when Some(d) %}{{ d }}{% when None %}{% endmatch %}</textarea>
+      </div>
+
+
+      {% when None %}
+      <div class="grid grid-cols-2 gap-6 mb-6">
+        <!-- name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-slate-700 mb-1">Name</label>
+          <input name="name" value=""  class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-600 focus:ring-slate-600 h-10"/>
+        </div>
+        <!-- status -->
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Status</label>
+          <select name="status" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-600 focus:ring-slate-600 h-10">
+            <option value="draft" selected>Draft</option>
+            <option value="active">Active</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+      </div>
+      <!-- description -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Description</label>
+        <textarea name="description" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-600 focus:ring-slate-600"></textarea>
+      </div>
+      {% endmatch %}
+
+      <div class="flex gap-2 mt-6">
+        <button class="px-3 py-2 rounded bg-slate-800 text-white" type="submit" hx-disabled-elt="this">Save</button>
+        <a class="px-3 py-2 rounded border" href="/samples" hx-boost="true" hx-push-url="true" hx-target="#shell"
+          hx-select="#shell" hx-swap="outerHTML swap:200ms">Cancel</a>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

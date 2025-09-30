@@ -1,0 +1,57 @@
+{# layout.html #}
+{% block head %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sample App</title>
+    <script src="/assets/htmx.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+       
+        #shell.htmx-swapping main>.page {
+            opacity: 0;
+            transition: opacity 200ms ease;
+        }
+        #shell main>.page.htmx-added {
+            opacity: 0;
+        }
+        #shell main>.page.htmx-settling {
+            opacity: 1;
+            transition: opacity 200ms ease;
+        }
+        .hx-disabled,
+        [aria-disabled="true"] {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800" hx-ext="disable-element">
+    <div class="max-w-4xl mx-auto p-6" id="shell">
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-semibold flex items-center">
+                <a href="/samples" hx-boost="true" hx-push-url="true" hx-target="#shell" hx-select="#shell"
+                    hx-swap="outerHTML swap:200ms">Samples App</a>
+
+            </h1>
+            {% if ctx.is_authenticated %}
+            <form hx-post="/logout" hx-target="#shell" hx-select="#shell" hx-swap="outerHTML swap:200ms"
+                hx-push-url="true">
+                <button class="text-sm px-3 py-1 rounded bg-slate-800 text-white">Logout</button>
+            </form>
+            {% else %}
+            <a href="/login" class="text-sm px-3 py-1 rounded bg-slate-800 text-white">Login</a>
+            {% endif %}
+        </header>
+
+        <main id="main">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
+{% endblock %}

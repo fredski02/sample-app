@@ -1,0 +1,56 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            INSERT INTO samples (name, description, status, created_by)\n            VALUES (?, ?, ?, ?)\n            RETURNING\n                id          AS \"id!\",\n                name        AS \"name!\",\n                description AS \"description?\",   -- nullable\n                status      AS \"status!\",\n                created_at  AS \"created_at!\",\n                updated_at  AS \"updated_at!\",\n                created_by  AS \"created_by!\"\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "id!",
+        "ordinal": 0,
+        "type_info": "Integer"
+      },
+      {
+        "name": "name!",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "description?",
+        "ordinal": 2,
+        "type_info": "Text"
+      },
+      {
+        "name": "status!",
+        "ordinal": 3,
+        "type_info": "Text"
+      },
+      {
+        "name": "created_at!",
+        "ordinal": 4,
+        "type_info": "Text"
+      },
+      {
+        "name": "updated_at!",
+        "ordinal": 5,
+        "type_info": "Text"
+      },
+      {
+        "name": "created_by!",
+        "ordinal": 6,
+        "type_info": "Integer"
+      }
+    ],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "ca96045f75c1c3f9b463485445fe1055ba411a4ea832277155f7ffa3e217b9c8"
+}

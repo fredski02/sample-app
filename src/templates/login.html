@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<section id="fragment" class="page login">
+    <div class="max-w-sm mx-auto bg-white p-6 rounded shadow">
+        <form method="post" action="/login" class="space-y-4" hx-post="/login" hx-target="#shell" hx-select="#shell"
+            hx-swap="outerHTML swap:200ms">
+            <h1 class="font-bold">Login</h1>
+            <div>
+                <label class="block text-sm font-medium">Email</label>
+                <input name="email" class="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Password</label>
+                <input type="password" name="password" class="w-full border rounded px-3 py-2" />
+            </div>
+            {% if error %}
+            <p class="text-red-600 text-sm">Invalid credentials</p>
+            {% endif %}
+            <button class="w-full bg-slate-800 text-white rounded py-2">Login</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

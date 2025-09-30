@@ -1,0 +1,29 @@
+{# samples_list.html #}
+{% extends "layout.html" %}
+{% block content %}
+<section id="fragment" class="page list" hx-history="false">
+    <div class="bg-white rounded shadow">
+        <div class="p-4 border-b flex justify-between items-center">
+            <h2 class="font-semibold">All Samples</h2>
+            <a href="/samples/new" class="px-3 py-1 rounded bg-slate-800 text-white" hx-boost="true" hx-push-url="true"
+                hx-target="#shell" hx-select="#shell" hx-swap="outerHTML swap:200ms">New Sample</a>
+        </div>
+        <table class="w-full text-left">
+            <thead>
+                <tr class="bg-slate-100">
+                    <th class="p-2 pl-4">ID</th>
+                    <th class="p-2">Name</th>
+                    <th class="p-2">Status</th>
+                    <th class="p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="rows">
+                {% for s in samples %}
+                {% include "samples_row.html" %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</section>
+{% endblock %}
